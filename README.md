@@ -1,7 +1,9 @@
 # StudyNotion
-## Live 
-https://study-notion-frontend-wheat.vercel.app/ \
-otp mail will be in your spam section
+## Screenshots
+![Screenshot 1](https://github.com/velocitypanther/StudyNotion/assets/112251957/4d75101f-10c9-4edd-9877-c4e3f5847c8e)
+![Screenshot 2](https://github.com/velocitypanther/StudyNotion/assets/112251957/65a8bee2-ce90-484a-9f36-4011c00ce017)
+![Screenshot 3](https://github.com/velocitypanther/StudyNotion/assets/112251957/e5458fdb-cf25-4548-98b3-65b068ea38e1)
+![Screenshot 4](https://github.com/velocitypanther/StudyNotion/assets/112251957/ab602c50-5c97-4c48-bf8f-7e371e8b5ac9)
 ## Installation
 
 1. Clone the repository: `https://github.com/Horror26/StudyNotion.git`
