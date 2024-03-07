@@ -1,6 +1,4 @@
-To restructure and update the README file based on your instructions, I'll organize it into a more readable format, update sections as requested, and make adjustments to align with the changes you've specified. Here's the revised README structure:
 
-```markdown
 # StudyNotion
 
 StudyNotion is an EdTech platform designed to provide an engaging learning experience for students and a comprehensive teaching platform for instructors. The platform offers a wide range of courses, user-friendly interfaces for both students and instructors, and a secure and efficient back-end to manage courses and user data.
