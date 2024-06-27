@@ -137,7 +137,8 @@ exports.signUp = async (req,res) => {
         console.log(err)
         return res.status(400).json({
             success:false,
-            message:err.message
+            message:err.message,
+            user,
         })
     }
 }
