@@ -14,7 +14,7 @@ exports.auth = async(req,res,next) => {
             })
         }
         try{
-            const decode = await jwt.verify(token,proces.env.JWT_SECRET)
+            const decode = jwt.verify(token,proces.env.JWT_SECRET)
             console.log(decode);
             req.User = decode
         }catch(err){
@@ -29,6 +29,24 @@ exports.auth = async(req,res,next) => {
         return res.status(401).json({
             success:false,
             message:"Something went wrong while validating the token"
+        })
+    }
+}
+
+exports.isStudent = async(req,res,next) => {
+    try{
+        if(req.user.accountType !==  "Student"){
+            return res.status(403).json({
+                success:false,
+                message:"This route is only for Students"
+            })
+        }
+        next()
+
+    }catch(err){
+        return res.status(500).json({
+            success:false,
+            message:"User role cannot be verified"
         })
     }
 }
