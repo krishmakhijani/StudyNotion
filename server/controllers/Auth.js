@@ -1,6 +1,8 @@
 const User = require("../models/User");
 const OTP = require("../models/OTP");
 const otpGenerator = require("otp-generator")
+const bcrypton = require("bcrypt")
+const Profile = require("../models/Profile")
 
 //sendOTP
 exports.sendOTP = async (req, res) => {
@@ -58,51 +60,84 @@ exports.sendOTP = async (req, res) => {
 //SignUp
 
 exports.signUp = async (req,res) => {
-    const{
-        firstName,
-        lastName,
-        email,
-        password,
-        confirmPassword,
-        accountType,
-        contactNumber,
-        otp
-    } = req.body;
+    try{
+        const{
+            firstName,
+            lastName,
+            email,
+            password,
+            confirmPassword,
+            accountType,
+            contactNumber,
+            otp
+        } = req.body;
 
-    if(!firstName || !lastName || email || !password || !confirmPassword || otp) {
-        return res.status(403).json({
-            success: false,
-            message: "All fields are required",
+        if(!firstName || !lastName || email || !password || !confirmPassword || otp) {
+            return res.status(403).json({
+                success: false,
+                message: "All fields are required",
+            })
+        }
+
+        if(password != confirmPassword){
+            return res.status(500).json({
+                success:false,
+                message : "Password doesnot match "
+            })
+        }
+
+        const exsistingUser = User.findOne({email})
+        if(exsistingUser){
+            return res.status(500).json({
+                success : false,
+                message : "User already exsists"
+            })
+        }
+
+        const recentOTP = await OTP.find({email}).sort({createdAt:-1}.limit(1)) //understand
+        console.log(recentOTP)
+
+        if(recentOTP.length == 0){
+            return res.status(400).json({
+                success:false,
+                message : "OTP not found"
+            })
+        }else if(otp != recentOTP.otp){
+            return res.status(400).json({
+                success:false,
+                message:"Invalid OTP"
+            })
+        }
+
+        const  hashedPassword = bcrypton.hash(password,10);
+
+        const profileDetails = Profile.create({
+            gender:null,
+            dateOfBirth:null,
+            about:null,
+            contactNumber:null,
         })
-    }
 
-    if(password != confirmPassword){
-        return res.status(500).json({
-            success:false,
-            message : "Password doesnot match "
+        const user = await User.create({
+            firstName,
+            lastName,
+            email,
+            contactNumber,
+            password:hashedPassword,
+            accountType,
+            additionalDetails:profileDetails,
+            image : `https://api.dicebear.com/5.x/initials/svg?seed=${firstname} ${lastname}`
         })
-    }
 
-    const exsistingUser = User.findOne({email})
-    if(exsistingUser){
-        return res.status(500).json({
-            success : false,
-            message : "User already exsists"
+        return res.status(200).json({
+            success:true,
+            message:"User created successfully"
         })
-    }
-
-    const recentOTP = await OTP.find({email}).sort({createdAt:-1}.limit(1)) //understand
-    console.log(recentOTP)
-
-    if(recentOTP.length == 0){
+    }catch(err){
+        console.log(err)
         return res.status(400).json({
             success:false,
-            message : "OTP not found"
-        })
-    }else if(otp != recentOTP.otp){
-        return res.status(400).json({
-            success:false,
-            message:"Invalid OTP"
+            message:err.message
         })
     }
 }
