@@ -50,3 +50,21 @@ exports.isStudent = async(req,res,next) => {
         })
     }
 }
+
+exports.isInstructor = async(req,res,next) => {
+    try{
+        if(req.user.accountType !==  "Instructor"){
+            return res.status(403).json({
+                success:false,
+                message:"This route is only for Instructor"
+            })
+        }
+        next()
+
+    }catch(err){
+        return res.status(500).json({
+            success:false,
+            message:"User role cannot be verified"
+        })
+    }
+}
