@@ -46,7 +46,7 @@ exports.isStudent = async(req,res,next) => {
     }catch(err){
         return res.status(500).json({
             success:false,
-            message:"User role cannot be verified"
+            message:"Students role cannot be verified"
         })
     }
 }
@@ -64,7 +64,25 @@ exports.isInstructor = async(req,res,next) => {
     }catch(err){
         return res.status(500).json({
             success:false,
-            message:"User role cannot be verified"
+            message:"Instructor role cannot be verified"
+        })
+    }
+}
+
+exports.isAdmin = async(req,res,next) => {
+    try{
+        if(req.user.accountType !==  "Admin"){
+            return res.status(403).json({
+                success:false,
+                message:"This route is only for Admin"
+            })
+        }
+        next()
+
+    }catch(err){
+        return res.status(500).json({
+            success:false,
+            message:"Admin role cannot be verified"
         })
     }
 }
