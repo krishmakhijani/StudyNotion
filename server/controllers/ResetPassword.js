@@ -1,6 +1,8 @@
+
 const User = require("../models/User");
 const mailSender = require("../utils/mailSender");
 const bcrypt = require("bcrypt");
+
 
 //resetPasswordToken
 exports.resetPasswordToken = async (req, res) => {
@@ -42,6 +44,10 @@ exports.resetPasswordToken = async (req, res) => {
             message:'Something went wrong while sending reset pwd mail'
         })
     }
+
+
+
+   
 }
 
 
