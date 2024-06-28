@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema({
     token:{
         type:String,
     },
-    resetPassword:{
+    resetPasswordExpire:{
         type:Date,
     },
     courseProgress: [

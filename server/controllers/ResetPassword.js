@@ -42,10 +42,6 @@ exports.resetPasswordToken = async (req, res) => {
             message:'Something went wrong while sending reset pwd mail'
         })
     }
-
-
-
-   
 }
 
 
